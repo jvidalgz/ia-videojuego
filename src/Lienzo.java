@@ -3,6 +3,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Timer;
 
 /**
  * Created by jaime on 14-04-2015.
@@ -10,9 +11,13 @@ import java.awt.event.MouseEvent;
 public class Lienzo extends Canvas implements Constantes {
     Laberinto laberinto;
     public Image fondo;
+    public Adversario adv1, adv2;
 
     public Lienzo() {
-        laberinto = new Laberinto();
+        laberinto = new Laberinto(this);
+        adv1 = new Adversario(laberinto);
+        adv2 = new Adversario(laberinto);
+
         //color fondo
         this.setBackground(Color.ORANGE);
         this.setSize(laberinto.ancho, laberinto.largo);
@@ -31,6 +36,11 @@ public class Lienzo extends Canvas implements Constantes {
                 repaint();
             }
         });
+
+        Timer lanzadorTareas = new Timer();
+        lanzadorTareas.scheduleAtFixedRate(adv1, 0, 120);
+        lanzadorTareas.scheduleAtFixedRate(adv2, 0,500);
+        //lanzadorTareas.scheduleAtFixedRate(adv1, 0, 750);
 
     }
 
